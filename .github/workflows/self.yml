@@ -1,17 +1,10 @@
-name: antispam
+name: antiscam
 
 on:
-  issues:
+  issue_comment:
     types:
-      - opened
+      - created
       - edited
-      - reopened
-  pull_request:
-    types:
-      - opened
-      - edited
-      - reopened
-      - synchronize
 
 permissions:
   pull-requests: write
@@ -19,11 +12,12 @@ permissions:
 
 jobs:
   build:
-    name: Antispam
+    if: ${{ !github.event.issue.pull_request }}
+    name: Antiscam
     runs-on: ubuntu-latest
 
     steps:
-      - uses: liamg/antispam-action@main
+      - uses: vbaranov/antiscam-action@main
         with:
           token: ${{ github.token }}
 

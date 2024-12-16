@@ -1,15 +1,13 @@
-# antispam-action
+# antiscam-action
 
-GitHub action to automatically close spam issues and pull requests.
-
-Currently I use this to close PRs from Russian bots on [traitor](https://github.com/liamg/traitor).
+GitHub action to automatically hide scam comments on issues.
 
 ## Usage
 
-Add the following to `.github/workflows/antispam.yml` in your repository:
+Add the following to `.github/workflows/antiscam.yml` in your repository:
 
 ```
-name: antispam
+name: antiscam
 
 on:
   issues:
@@ -30,11 +28,11 @@ permissions:
 
 jobs:
   build:
-    name: Antispam
+    name: Antiscam
     runs-on: ubuntu-latest
 
     steps:
-      - uses: liamg/antispam-action@1
+      - uses: vbaranov/antiscam@1
         with:
           token: ${{ github.token }}
 ```

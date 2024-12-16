@@ -1,4 +1,4 @@
-package antispam
+package antiscam
 
 type Detection struct {
 	AuthorFeedback string

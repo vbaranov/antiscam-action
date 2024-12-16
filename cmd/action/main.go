@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/google/go-github/v50/github"
-	"github.com/liamg/antispam-action/pkg/antispam"
+	"github.com/vbaranov/antiscam-action/pkg/antiscam"
 )
 
 func main() {
@@ -24,15 +24,11 @@ func main() {
 
 	ctx := context.Background()
 	client := github.NewTokenClient(ctx, os.Getenv("INPUT_TOKEN"))
-	a := antispam.New(ctx, client)
+	a := antiscam.New(ctx, client)
 
 	switch eventType {
-	case "pull_request":
-		if err := a.ProcessPullRequest(eventData); err != nil {
-			fail(err)
-		}
-	case "issues":
-		if err := a.ProcessIssue(eventData); err != nil {
+	case "issue_comment":
+		if err := a.ProcessIssueComment(eventData); err != nil {
 			fail(err)
 		}
 	}
