@@ -22,23 +22,25 @@ func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 		fmt.Printf("Detected scam in %s: %s\n", detection.Location, detection.DebugInfo)
 	}
 
-	a.client.Issues.DeleteComment(
-		a.ctx,
-		event.GetRepo().GetOwner().GetLogin(),
-		event.GetRepo().GetName(),
-		event.GetComment().GetID(),
-	)
-
-	if _, _, err := a.client.Issues.CreateComment(
-		a.ctx,
-		event.GetRepo().GetOwner().GetLogin(),
-		event.GetRepo().GetName(),
-		event.GetIssue().GetNumber(),
-		&github.IssueComment{
-			Body: &body,
-		},
-	); err != nil {
-		return err
+	if len(detections) > 0 {
+		a.client.Issues.DeleteComment(
+			a.ctx,
+			event.GetRepo().GetOwner().GetLogin(),
+			event.GetRepo().GetName(),
+			event.GetComment().GetID(),
+		)
+	
+		if _, _, err := a.client.Issues.CreateComment(
+			a.ctx,
+			event.GetRepo().GetOwner().GetLogin(),
+			event.GetRepo().GetName(),
+			event.GetIssue().GetNumber(),
+			&github.IssueComment{
+				Body: &body,
+			},
+		); err != nil {
+			return err
+		}
 	}
 
 	return nil
