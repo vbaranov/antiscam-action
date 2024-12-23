@@ -1,0 +1,13 @@
+name: "Antiscam Filter"
+description: "Automatically hide scam issue comments"
+author: "Viktor Baranov"
+branding:
+  icon: 'slash'
+  color: 'blue'
+inputs:
+  token:
+    description: "GitHub token"
+    required: true
+runs:
+  using: "docker"
+  image: "Dockerfile"
