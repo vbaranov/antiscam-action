@@ -10,17 +10,10 @@ Add the following to `.github/workflows/antiscam.yml` in your repository:
 name: antiscam
 
 on:
-  issues:
+  issue_comment:
     types:
-      - opened
+      - created
       - edited
-      - reopened
-  pull_request:
-    types:
-      - opened
-      - edited
-      - reopened
-      - synchronize
 
 permissions:
   pull-requests: write
