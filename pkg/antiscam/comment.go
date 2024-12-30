@@ -26,17 +26,17 @@ func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 		fmt.Printf("Detected scam in %s: %s\n", detection.Location, detection.DebugInfo)
 	}
 
-	fmt.Printf("Organization ID %d\n", event.Organization.GetID())
-	fmt.Printf("Team ID %d\n", event.GetRepo().GetTeamID())
+	fmt.Printf("Organization ID %s\n", event.GetOrganization().GetName())
+	fmt.Printf("Team ID %s\n", event.GetRepo().GetName())
 	fmt.Printf("Issue number %d\n", event.Issue.GetNumber())
 	fmt.Printf("Discussion number %d\n", event2.Discussion.GetNumber())
 	fmt.Printf("Discussion comment number %d\n", int(event.GetComment().GetID()))
 
 	if len(detections) > 0 {
-		if _, err := a.client.Teams.DeleteCommentByID(
+		if _, err := a.client.Teams.DeleteCommentBySlug(
 			a.ctx,
-			event.GetOrganization().GetID(),
-			event.GetRepo().GetTeamID(),
+			event.GetOrganization().GetName(),
+			event.GetRepo().GetName(),
 			event2.Discussion.GetNumber(),
 			int(event.GetComment().GetID()),
 		); err != nil {
