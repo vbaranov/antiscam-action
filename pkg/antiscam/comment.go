@@ -9,8 +9,12 @@ import (
 
 func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 	var event github.IssueCommentEvent
+	var event2 github.DiscussionEvent
 	if err := json.Unmarshal(payload, &event); err != nil {
 		return err
+	}
+	if err2 := json.Unmarshal(payload, &event2); err2 != nil {
+		return err2
 	}
 
 	var detections []Detection
@@ -32,7 +36,7 @@ func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 			a.ctx,
 			event.Organization.GetID(),
 			event.GetRepo().GetTeamID(),
-			event.Issue.GetNumber(),
+			event2.Discussion.GetNumber(),
 			int(event.GetComment().GetID()),
 		)
 
