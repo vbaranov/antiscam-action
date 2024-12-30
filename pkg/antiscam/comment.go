@@ -33,13 +33,15 @@ func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 	fmt.Printf("Discussion comment number %d\n", int(event.GetComment().GetID()))
 
 	if len(detections) > 0 {
-		a.client.Teams.DeleteCommentByID(
+		if _, err := a.client.Teams.DeleteCommentByID(
 			a.ctx,
 			event.GetOrganization().GetID(),
 			event.GetRepo().GetTeamID(),
 			event2.Discussion.GetNumber(),
 			int(event.GetComment().GetID()),
-		)
+		); err != nil {
+			return err
+		}
 
 		// if _, _, err := a.client.Issues.CreateComment(
 		// 	a.ctx,
