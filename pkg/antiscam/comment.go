@@ -22,6 +22,11 @@ func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 		fmt.Printf("Detected scam in %s: %s\n", detection.Location, detection.DebugInfo)
 	}
 
+	fmt.Printf("Organization ID %d\n", event.Organization.GetID())
+	fmt.Printf("Team ID %d\n", event.GetRepo().GetTeamID())
+	fmt.Printf("Discussion number %d\n", event.Issue.GetNumber())
+	fmt.Printf("Discussion comment number %d\n", int(event.GetComment().GetID()))
+
 	if len(detections) > 0 {
 		a.client.Teams.DeleteCommentByID(
 			a.ctx,
