@@ -35,7 +35,7 @@ func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 	if len(detections) > 0 {
 		a.client.Teams.DeleteCommentByID(
 			a.ctx,
-			event.Organization.GetID(),
+			event.GetOrganization().GetID(),
 			event.GetRepo().GetTeamID(),
 			event2.Discussion.GetNumber(),
 			int(event.GetComment().GetID()),
