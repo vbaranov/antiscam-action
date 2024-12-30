@@ -23,24 +23,25 @@ func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 	}
 
 	if len(detections) > 0 {
-		a.client.Issues.DeleteComment(
+		a.client.Teams.DeleteCommentByID(
 			a.ctx,
-			event.GetRepo().GetOwner().GetLogin(),
-			event.GetRepo().GetName(),
-			event.GetComment().GetID(),
+			event.Organization.GetID(),
+			event.GetRepo().GetTeamID(),
+			event.Issue.GetNumber(),
+			int(event.GetComment().GetID()),
 		)
-	
-		if _, _, err := a.client.Issues.CreateComment(
-			a.ctx,
-			event.GetRepo().GetOwner().GetLogin(),
-			event.GetRepo().GetName(),
-			event.GetIssue().GetNumber(),
-			&github.IssueComment{
-				Body: &body,
-			},
-		); err != nil {
-			return err
-		}
+
+		// if _, _, err := a.client.Issues.CreateComment(
+		// 	a.ctx,
+		// 	event.GetRepo().GetOwner().GetLogin(),
+		// 	event.GetRepo().GetName(),
+		// 	event.GetIssue().GetNumber(),
+		// 	&github.IssueComment{
+		// 		Body: &body,
+		// 	},
+		// ); err != nil {
+		// 	return err
+		// }
 	}
 
 	return nil
