@@ -31,6 +31,10 @@ func main() {
 		if err := a.ProcessIssueComment(eventData); err != nil {
 			fail(err)
 		}
+	case "discussion_comment":
+		if err := a.ProcessIssueComment(eventData); err != nil {
+			fail(err)
+		}
 	}
 }
 
