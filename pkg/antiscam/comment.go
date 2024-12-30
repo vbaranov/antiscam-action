@@ -16,7 +16,7 @@ func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 	var detections []Detection
 	detections = append(detections, checkComment(event.GetComment().GetBody())...)
 
-	body := fmt.Sprintf("@%s The previous user tried to scam you by providing a fake support link. Don't interact with it.\n", event.GetIssue().GetUser().GetLogin())
+	// body := fmt.Sprintf("@%s The previous user tried to scam you by providing a fake support link. Don't interact with it.\n", event.GetIssue().GetUser().GetLogin())
 
 	for _, detection := range detections {
 		fmt.Printf("Detected scam in %s: %s\n", detection.Location, detection.DebugInfo)
