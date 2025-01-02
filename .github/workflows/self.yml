@@ -5,10 +5,15 @@ on:
     types:
       - created
       - edited
+  discussion_comment:
+    types:
+      - created
+      - edited
 
 permissions:
   pull-requests: write
   issues: write
+  discussions: write
 
 jobs:
   build:
@@ -20,4 +25,3 @@ jobs:
       - uses: vbaranov/antiscam-action@main
         with:
           token: ${{ github.token }}
-

@@ -13,6 +13,9 @@ func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 		return err
 	}
 
+	fmt.Printf("issue comment: %s\n", github.Stringify(event))
+
+
 	var detections []Detection
 	detections = append(detections, checkComment(event.GetComment().GetBody())...)
 
@@ -23,14 +26,14 @@ func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 	}
 
 	if len(detections) > 0 {
-		a.client.Issues.DeleteComment(
+		a.restClient.Issues.DeleteComment(
 			a.ctx,
 			event.GetRepo().GetOwner().GetLogin(),
 			event.GetRepo().GetName(),
 			event.GetComment().GetID(),
 		)
-	
-		if _, _, err := a.client.Issues.CreateComment(
+
+		if _, _, err := a.restClient.Issues.CreateComment(
 			a.ctx,
 			event.GetRepo().GetOwner().GetLogin(),
 			event.GetRepo().GetName(),
