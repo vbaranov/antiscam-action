@@ -7,7 +7,8 @@ func checkComment(body string) []Detection {
 	body_lower_case := strings.ToLower(body)
 	if strings.Contains(body_lower_case, ".web.app") || ((strings.Contains(body_lower_case, "https://") &&
 		!strings.Contains(body_lower_case, "https://github.com") &&
-		!strings.Contains(body_lower_case, "https://discord.gg/blockscout")) ||
+		!strings.Contains(body_lower_case, "https://discord.gg/blockscout") &&
+		!strings.Contains(body_lower_case, "https://docs.blockscout.com")) ||
 		strings.Contains(body_lower_case, "http://")) &&
 		(strings.Contains(body_lower_case, "support") ||
 			strings.Contains(body_lower_case, "forum") ||
