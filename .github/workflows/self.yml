@@ -25,3 +25,5 @@ jobs:
       - uses: vbaranov/antiscam-action@dev
         with:
           token: ${{ github.token }}
+        env:
+          whitelisted_logins: ${{ secrets.SCAM_ACTION_WHITELISTED_LOGINS }}
