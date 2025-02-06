@@ -26,4 +26,4 @@ jobs:
         with:
           token: ${{ github.token }}
         env:
-          whitelisted_logins: ${{ secrets.SCAM_ACTION_WHITELISTED_LOGINS }}
+          whitelisted_logins: ${{ vars.SCAM_ACTION_WHITELISTED_LOGINS }}
