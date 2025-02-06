@@ -3,6 +3,7 @@ package antiscam
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/shurcooL/githubv4"
 )
 
@@ -42,7 +43,7 @@ func (a *Antiscam) ProcessDiscussionComment(payload []byte) error {
 		return fmt.Errorf("failed to unmarshal payload: %w", err)
 	}
 
-	detections := checkComment(event.Comment.Body)
+	detections := checkComment(event.Comment.Body, event.Comment.User.Login)
 	if len(detections) == 0 {
 		return nil
 	}

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/google/go-github/v50/github"
+	"github.com/google/go-github/v69/github"
 )
 
 func (a *Antiscam) ProcessIssueComment(payload []byte) error {
@@ -15,9 +15,8 @@ func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 
 	fmt.Printf("issue comment: %s\n", github.Stringify(event))
 
-
 	var detections []Detection
-	detections = append(detections, checkComment(event.GetComment().GetBody())...)
+	detections = append(detections, checkComment(*event.Comment.Body, *event.Comment.User.Login)...)
 
 	body := fmt.Sprintf("@%s The previous user tried to scam you by providing a fake support link. Don't interact with it.\n", event.GetIssue().GetUser().GetLogin())
 
