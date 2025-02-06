@@ -22,6 +22,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: vbaranov/antiscam-action@main
+      - uses: vbaranov/antiscam-action@dev
         with:
           token: ${{ github.token }}
