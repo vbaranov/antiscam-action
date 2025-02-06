@@ -4,10 +4,11 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"golang.org/x/oauth2"
+
+	"github.com/google/go-github/v69/github"
 	"github.com/shurcooL/githubv4"
-	"github.com/google/go-github/v50/github"
 	"github.com/vbaranov/antiscam-action/pkg/antiscam"
+	"golang.org/x/oauth2"
 )
 
 func main() {
