@@ -21,7 +21,7 @@ func checkComment(body string, comment_author string) []Detection {
 	var detections []Detection
 	if !whitelisted_logins[strings.ToLower(comment_author)] {
 		body_lower_case := strings.ToLower(body)
-		if strings.Contains(body_lower_case, ".web.app") || ((strings.Contains(body_lower_case, "https://") &&
+		if strings.Contains(body_lower_case, ".web.app") || strings.Contains(body_lower_case, "mailto:") || ((strings.Contains(body_lower_case, "https://") &&
 			!strings.Contains(body_lower_case, "https://github.com") &&
 			!strings.Contains(body_lower_case, "https://discord.gg/blockscout") &&
 			!strings.Contains(body_lower_case, "https://docs.blockscout.com")) ||
