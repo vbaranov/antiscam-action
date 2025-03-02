@@ -21,19 +21,52 @@ func checkComment(body string, comment_author string) []Detection {
 	var detections []Detection
 	if !whitelisted_logins[strings.ToLower(comment_author)] {
 		body_lower_case := strings.ToLower(body)
-		if strings.Contains(body_lower_case, ".web.app") || strings.Contains(body_lower_case, "outlook.com") || (((strings.Contains(body_lower_case, "https://") || strings.Contains(body_lower_case, ".com") || strings.Contains(body_lower_case, "telegram") || strings.Contains(body_lower_case, "@")) &&
-			!strings.Contains(body_lower_case, "https://github.com") &&
-			!strings.Contains(body_lower_case, "https://discord.gg/blockscout") &&
-			!strings.Contains(body_lower_case, "https://docs.blockscout.com")) ||
-			strings.Contains(body_lower_case, "http://")) &&
-			(strings.Contains(body_lower_case, "support") ||
-				strings.Contains(body_lower_case, "forum") ||
-				strings.Contains(body_lower_case, "help") ||
-				strings.Contains(body_lower_case, "dapps portal")) {
-			detections = append(detections, Detection{
-				Location:  "body",
-				DebugInfo: "Comment body contains scammy text.",
-			})
+		scammyPatterns := []string{
+			".web.app",
+			"https://",
+			"http://",
+			".com",
+			"telegram",
+			"@",
+		}
+		exceptions := []string{
+			"https://github.com",
+			"https://discord.gg/blockscout",
+			"https://docs.blockscout.com",
+		}
+		supportPatterns := []string{
+			"support",
+			"forum",
+			"help",
+			"dapps portal",
+		}
+
+		isScammy := false
+		for _, pattern := range scammyPatterns {
+			isScammy = true
+			if strings.Contains(body_lower_case, pattern) {
+				if pattern == "https://" {
+					for _, exception := range exceptions {
+						if strings.Contains(body_lower_case, exception) {
+							isScammy = false
+						}
+					}
+				} else {
+					break
+				}
+			}
+		}
+
+		if isScammy {
+			for _, supportPattern := range supportPatterns {
+				if strings.Contains(body_lower_case, supportPattern) {
+					detections = append(detections, Detection{
+						Location:  "body",
+						DebugInfo: "Comment body contains scammy text.",
+					})
+					break
+				}
+			}
 		}
 	} else {
 		fmt.Printf("Author is whitelisted: %s\n", comment_author)
