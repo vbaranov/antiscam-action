@@ -41,17 +41,20 @@ func checkComment(body string, comment_author string) []Detection {
 			"dapps portal",
 		}
 
+		isPotentiallyScammy := false
 		isScammy := false
 		for _, pattern := range scammyPatterns {
-			isScammy = true
+			isPotentiallyScammy = true
 			if strings.Contains(body_lower_case, pattern) {
 				if contains(solidScammyPatterns, pattern) {
 					detections = appendDetection(detections)
+					isScammy = true
+					break
 				}
 				if pattern == "https://" {
 					for _, exception := range exceptions {
 						if strings.Contains(body_lower_case, exception) {
-							isScammy = false
+							isPotentiallyScammy = false
 						}
 					}
 				} else {
@@ -60,7 +63,7 @@ func checkComment(body string, comment_author string) []Detection {
 			}
 		}
 
-		if isScammy {
+		if isPotentiallyScammy && !isScammy {
 			for _, supportPattern := range supportPatterns {
 				if strings.Contains(body_lower_case, supportPattern) {
 					detections = appendDetection(detections)

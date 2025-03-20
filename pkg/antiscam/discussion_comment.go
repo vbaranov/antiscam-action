@@ -75,7 +75,7 @@ func (a *Antiscam) deleteDiscussionScamComment(commentID string) error {
 func (a *Antiscam) addWarningDiscussionComment(discussionID string, userLogin string) error {
 	var mutation addCommentMutation
 	body := fmt.Sprintf(
-		"@%s The previous user tried to scam you by providing a fake support link. Don't interact with it.\n",
+		"@%s The previous user tried to scam you by providing a fake support link or email. \nDo not interact with them or share any personal information. Always verify official support contacts.\n",
 		userLogin,
 	)
 
