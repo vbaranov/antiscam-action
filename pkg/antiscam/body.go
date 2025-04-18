@@ -26,7 +26,6 @@ func checkComment(body string, comment_author string) []Detection {
 		solidScammyPatterns := []string{
 			".web.app",
 			"telegram",
-			"@",
 		}
 		scammyPatterns := append(solidScammyPatterns, "https://", "http://", ".com")
 		exceptions := []string{
